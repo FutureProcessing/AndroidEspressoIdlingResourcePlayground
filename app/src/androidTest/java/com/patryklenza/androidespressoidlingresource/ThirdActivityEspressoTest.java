@@ -1,8 +1,10 @@
 package com.patryklenza.androidespressoidlingresource;
 
+import android.provider.Settings;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,9 +24,11 @@ public class ThirdActivityEspressoTest {
 
     @Test
     public void thirdActivityTest() throws InterruptedException {
-        // onView(withId(R.id.button1OnSecondActivity)).perform(click());
+        ((GlobalApplication)third.instrumentation().getTargetContext().getApplicationContext()).initWithModules(new MockRestServicesModule());
+        ((GlobalApplication)third.instrumentation().getTargetContext().getApplicationContext()).inject(third.get());
+//         third.get()
         Thread.sleep(2000);
-        onView(withId(R.id.list)).check(matches(withText("22391672")));
+        onView(withId(R.id.list)).check(matches(withText("123456789")));
     }
 
     private static class DecoratedLongRunningService extends RealLongRunningService implements IdlingResource {

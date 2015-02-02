@@ -28,7 +28,7 @@ public class ThirdActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
         textView = (TextView) findViewById(R.id.list);
-        ((GlobalApplication) getApplication()).component().inject(this);
+        ((GlobalApplication)getApplicationContext()).inject(this);
     }
 
     @Override

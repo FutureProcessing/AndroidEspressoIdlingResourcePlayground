@@ -4,30 +4,23 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
+import dagger.Module;
+import dagger.ObjectGraph;
 import rx.Observable;
 import rx.Subscriber;
 
 public class GlobalApplication extends Application {
     private static Observable<ActivityEvent> _activityEventStream;
+    private static ObjectGraph objectGraph;
 
     public static Observable<ActivityEvent> activityEventStream() {
         return _activityEventStream;
     }
-
-    @Singleton
-    @Component(modules = RestServicesModule.class)
-    public interface ApplicationComponent {
-        void inject(GlobalApplication application);
-
-        void inject(ThirdActivity thirdActivity);
-    }
-
-    private ApplicationComponent component;
 
     @Override
     public void onCreate() {
@@ -35,14 +28,26 @@ public class GlobalApplication extends Application {
         ActivityEventProducer activityEventProducer = new ActivityEventProducer();
         _activityEventStream = Observable.create(activityEventProducer);
         registerActivityLifecycleCallbacks(activityEventProducer);
-        component = Dagger_GlobalApplication_ApplicationComponent.builder()
-                .restServicesModule(new RestServicesModule())
-                .build();
-        component().inject(this);
+
+        List<Object> modules = getProductionModules();
+        objectGraph = ObjectGraph.create(modules.toArray());
     }
 
-    public ApplicationComponent component() {
-        return component;
+    private static List<Object> getProductionModules() {
+        List<Object> modules = new ArrayList<>();
+        modules.add(new RestServicesModule());
+        return modules;
+    }
+
+    public void inject(Object object) {
+        objectGraph.inject(object);
+    }
+
+    public static void initWithModules(Object... modules){
+        List<Object> modulesList =  new ArrayList<>();
+//        modulesList.addAll(getProductionModules());
+        modulesList.addAll(Arrays.asList(modules));
+        objectGraph = ObjectGraph.create(modules);
     }
 
     private static class ActivityEventProducer implements ActivityLifecycleCallbacks, Observable.OnSubscribe<ActivityEvent> {

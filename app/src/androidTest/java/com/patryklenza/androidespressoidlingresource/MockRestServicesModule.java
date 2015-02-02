@@ -4,14 +4,14 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
-        complete = false,
         library = true,
+        overrides = true,
         injects = ThirdActivity.class
 )
-public class RestServicesModule {
+public class MockRestServicesModule {
 
     @Provides
     public BackendContract provideLogoutService() {
-        return new BackendService();
+        return new MockBackendService();
     }
 }
