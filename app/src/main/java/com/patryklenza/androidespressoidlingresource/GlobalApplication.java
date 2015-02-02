@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
+import javax.inject.Singleton;
+
+import dagger.Component;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -16,12 +19,30 @@ public class GlobalApplication extends Application {
         return _activityEventStream;
     }
 
+    @Singleton
+    @Component(modules = RestServicesModule.class)
+    public interface ApplicationComponent {
+        void inject(GlobalApplication application);
+
+        void inject(ThirdActivity thirdActivity);
+    }
+
+    private ApplicationComponent component;
+
     @Override
     public void onCreate() {
         super.onCreate();
         ActivityEventProducer activityEventProducer = new ActivityEventProducer();
         _activityEventStream = Observable.create(activityEventProducer);
         registerActivityLifecycleCallbacks(activityEventProducer);
+        component = Dagger_GlobalApplication_ApplicationComponent.builder()
+                .restServicesModule(new RestServicesModule())
+                .build();
+        component().inject(this);
+    }
+
+    public ApplicationComponent component() {
+        return component;
     }
 
     private static class ActivityEventProducer implements ActivityLifecycleCallbacks, Observable.OnSubscribe<ActivityEvent> {

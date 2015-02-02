@@ -16,6 +16,7 @@ import rx.schedulers.Schedulers;
 public class FirstActivity extends Activity {
 
     private Button button1OnFirstActivity;
+    private Button button2OnFirstActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class FirstActivity extends Activity {
         setContentView(R.layout.activity_first);
 
         button1OnFirstActivity = (Button) findViewById(R.id.button1OnFirstActivity);
+        button2OnFirstActivity = (Button) findViewById(R.id.button2OnFirstActivity);
 
         button1OnFirstActivity.setOnClickListener(v -> {
             button1OnFirstActivity.setEnabled(false);
@@ -31,6 +33,11 @@ public class FirstActivity extends Activity {
                     .observeOn(AndroidSchedulers.mainThread())
                     .delay(10, TimeUnit.SECONDS)
                     .subscribe(launchSecondActivitySubscriber());
+        });
+
+        button2OnFirstActivity.setOnClickListener(v -> {
+            Intent thirdActivity = new Intent(FirstActivity.this, ThirdActivity.class);
+            startActivity(thirdActivity);
         });
     }
 

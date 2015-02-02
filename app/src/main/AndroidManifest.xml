@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.patryklenza.androidespressoidlingresource" >
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:name="com.patryklenza.androidespressoidlingresource.GlobalApplication"
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -20,6 +22,10 @@
         <activity
             android:name=".SecondActivity"
             android:label="@string/title_activity_second" >
+        </activity>
+        <activity
+            android:name=".ThirdActivity"
+            android:label="@string/title_activity_third" >
         </activity>
     </application>
 
