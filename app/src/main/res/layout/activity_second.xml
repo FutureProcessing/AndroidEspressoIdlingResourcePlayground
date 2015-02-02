@@ -10,4 +10,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView2" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Long Running Op"
+        android:id="@+id/button1OnSecondActivity"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Waiting..."
+        android:id="@+id/textViewOpResult"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/textView2" />
+
 </RelativeLayout>

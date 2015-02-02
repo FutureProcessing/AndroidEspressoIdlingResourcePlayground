@@ -21,12 +21,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 
 @RunWith(AndroidJUnit4.class)
-public class EspressoTest {
+public class FirstActivityEspressoTest {
     @Rule
     public final ActivityRule<FirstActivity> main = new ActivityRule<>(FirstActivity.class);
 
     @Test
-    public void initialTest() throws InterruptedException {
+    public void firstActivityTest() throws InterruptedException {
         SecondActivityCreatedIdlingResource idlingResouce = new SecondActivityCreatedIdlingResource();
 
         GlobalApplication.activityEventStream().
