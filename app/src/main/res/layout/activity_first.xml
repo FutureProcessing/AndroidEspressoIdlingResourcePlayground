@@ -13,9 +13,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to next activity"
+        android:text="Go to second activity"
         android:id="@+id/button1OnFirstActivity"
         android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to third activity"
+        android:id="@+id/button2OnFirstActivity"
+        android:layout_below="@+id/button1OnFirstActivity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp" />
 
