@@ -45,6 +45,10 @@ public class GlobalApplication extends Application {
         return component;
     }
 
+    public void setComponent(ApplicationComponent component1){
+        this.component = component1;
+    }
+
     private static class ActivityEventProducer implements ActivityLifecycleCallbacks, Observable.OnSubscribe<ActivityEvent> {
 
         private ArrayBlockingQueue<ActivityEvent> activityEvents = new ArrayBlockingQueue<>(16, false);

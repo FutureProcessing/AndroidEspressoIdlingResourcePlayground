@@ -57,14 +57,8 @@ public class ActivityRule<T extends Activity> implements TestRule {
         };
     }
 
-    private Instrumentation fetchInstrumentation() {
-        Instrumentation result = instrumentation;
-        return result != null ? result
-                : (instrumentation = InstrumentationRegistry.getInstrumentation());
-    }
-
     @SuppressWarnings("unchecked") // Guarded by generics at the constructor.
-    private void launchActivity() {
+    public void launchActivity() {
         if (activity != null) return;
 
         Instrumentation instrumentation = fetchInstrumentation();
@@ -74,5 +68,11 @@ public class ActivityRule<T extends Activity> implements TestRule {
 
         activity = (T) instrumentation.startActivitySync(intent);
         instrumentation.waitForIdleSync();
+    }
+
+    private Instrumentation fetchInstrumentation() {
+        Instrumentation result = instrumentation;
+        return result != null ? result
+                : (instrumentation = InstrumentationRegistry.getInstrumentation());
     }
 }
