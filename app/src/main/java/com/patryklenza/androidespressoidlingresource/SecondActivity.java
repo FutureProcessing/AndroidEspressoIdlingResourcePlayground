@@ -29,8 +29,8 @@ public class SecondActivity extends Activity {
         button1OnSecondActivity.setOnClickListener(v -> {
                                                        button1OnSecondActivity.setEnabled(false);
                                                        textViewOpResult.setText("Running...");
-                                                       service.doLongRunningOpAndReturnResult(result -> textViewOpResult.post(() -> textViewOpResult.setText(
-                                                               result)));
+                                                       service.doLongRunningOpAndReturnResult(result -> textViewOpResult.post(
+                                                               () -> textViewOpResult.setText(result)));
                                                    }
         );
     }

@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -16,6 +17,7 @@ public class FirstActivity extends Activity {
 
     private Button button1OnFirstActivity;
     private Button button2OnFirstActivity;
+    private Subscription subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,11 @@ public class FirstActivity extends Activity {
 
         button1OnFirstActivity.setOnClickListener(v -> {
             button1OnFirstActivity.setEnabled(false);
-            Observable.empty()
-                      .subscribeOn(Schedulers.newThread())
-                      .observeOn(AndroidSchedulers.mainThread())
-                      .delay(10, TimeUnit.SECONDS)
-                      .subscribe(launchSecondActivitySubscriber());
+            subscription = Observable.empty()
+                                               .subscribeOn(Schedulers.newThread())
+                                               .observeOn(AndroidSchedulers.mainThread())
+                                               .delay(10, TimeUnit.SECONDS)
+                                               .subscribe(launchSecondActivitySubscriber());
         });
 
         button2OnFirstActivity.setOnClickListener(v -> {
@@ -40,12 +42,22 @@ public class FirstActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        if(subscription != null) {
+            subscription.unsubscribe();
+        }
+        super.onDestroy();
+    }
+
     private Subscriber<Object> launchSecondActivitySubscriber() {
         return new Subscriber<Object>() {
             @Override
             public void onCompleted() {
-                Intent secondActivity = new Intent(FirstActivity.this, SecondActivity.class);
-                startActivity(secondActivity);
+                if(!isUnsubscribed()) {
+                    Intent secondActivity = new Intent(FirstActivity.this, SecondActivity.class);
+                    startActivity(secondActivity);
+                }
             }
 
             @Override
