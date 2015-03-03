@@ -8,7 +8,7 @@ public class RealLongRunningService {
             try {
                 Thread.sleep(10000);
                 result.call("SUCCESS");
-            } catch (InterruptedException e) {
+            } catch(InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();

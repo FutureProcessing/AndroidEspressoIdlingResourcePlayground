@@ -12,7 +12,6 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-
 public class FirstActivity extends Activity {
 
     private Button button1OnFirstActivity;
@@ -29,10 +28,10 @@ public class FirstActivity extends Activity {
         button1OnFirstActivity.setOnClickListener(v -> {
             button1OnFirstActivity.setEnabled(false);
             Observable.empty()
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .delay(10, TimeUnit.SECONDS)
-                    .subscribe(launchSecondActivitySubscriber());
+                      .subscribeOn(Schedulers.newThread())
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .delay(10, TimeUnit.SECONDS)
+                      .subscribe(launchSecondActivitySubscriber());
         });
 
         button2OnFirstActivity.setOnClickListener(v -> {

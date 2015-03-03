@@ -14,20 +14,11 @@ import rx.Subscriber;
 
 public class GlobalApplication extends Application {
     private static Observable<ActivityEvent> _activityEventStream;
+    private ApplicationComponent component;
 
     public static Observable<ActivityEvent> activityEventStream() {
         return _activityEventStream;
     }
-
-    @Singleton
-    @Component(modules = RestServicesModule.class)
-    public interface ApplicationComponent {
-        void inject(GlobalApplication application);
-
-        void inject(ThirdActivity thirdActivity);
-    }
-
-    private ApplicationComponent component;
 
     @Override
     public void onCreate() {
@@ -36,8 +27,8 @@ public class GlobalApplication extends Application {
         _activityEventStream = Observable.create(activityEventProducer);
         registerActivityLifecycleCallbacks(activityEventProducer);
         component = Dagger_GlobalApplication_ApplicationComponent.builder()
-                .restServicesModule(new RestServicesModule())
-                .build();
+                                                                 .restServicesModule(new RestServicesModule())
+                                                                 .build();
         component().inject(this);
     }
 
@@ -45,8 +36,16 @@ public class GlobalApplication extends Application {
         return component;
     }
 
-    public void setComponent(ApplicationComponent component1){
+    public void setComponent(ApplicationComponent component1) {
         this.component = component1;
+    }
+
+    @Singleton
+    @Component(modules = RestServicesModule.class)
+    public interface ApplicationComponent {
+        void inject(GlobalApplication application);
+
+        void inject(ThirdActivity thirdActivity);
     }
 
     private static class ActivityEventProducer implements ActivityLifecycleCallbacks, Observable.OnSubscribe<ActivityEvent> {
@@ -92,11 +91,11 @@ public class GlobalApplication extends Application {
         @Override
         public void call(Subscriber<? super ActivityEvent> subscriber) {
             try {
-                while (!subscriber.isUnsubscribed()) {
+                while(!subscriber.isUnsubscribed()) {
                     ActivityEvent activityEvent = activityEvents.take();
                     subscriber.onNext(activityEvent);
                 }
-            } catch (Exception e) {
+            } catch(Exception e) {
                 subscriber.onError(e);
             }
         }

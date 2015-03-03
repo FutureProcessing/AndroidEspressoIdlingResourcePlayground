@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-
 public class ThirdActivity extends Activity {
 
     TextView textView;
@@ -32,10 +31,9 @@ public class ThirdActivity extends Activity {
     }
 
     public void performBackendCall() {
-        backendContract.getRepositoriesForUser().
+        backendContract.getJakesRepos().
                 subscribeOn(Schedulers.io()).
-                observeOn(AndroidSchedulers.mainThread()).
-                subscribe(repositories -> textView.setText(String.valueOf(repositories.get(0).id)));
+                               observeOn(AndroidSchedulers.mainThread()).
+                               subscribe(repositories -> textView.setText(repositories.get(0).name));
     }
-
 }

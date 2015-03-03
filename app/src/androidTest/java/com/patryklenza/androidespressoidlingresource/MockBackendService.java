@@ -7,7 +7,7 @@ import rx.Observable;
 
 public class MockBackendService implements BackendContract{
     @Override
-    public Observable<List<Repository>> getRepositoriesForUser() {
+    public Observable<List<Repository>> getJakesRepos() {
         Repository repo = new Repository();
         repo.id = 1234123;
         return Observable.just(Arrays.asList(repo));
