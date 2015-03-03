@@ -36,20 +36,24 @@ public class ActivityRule<T extends Activity> implements TestRule {
         return activity;
     }
 
-    /** Get the {@link Instrumentation} instance for this test. */
+    /**
+     * Get the {@link Instrumentation} instance for this test.
+     */
     public final Instrumentation instrumentation() {
         launchActivity();
         return instrumentation;
     }
 
-    @Override public final Statement apply(final Statement base, Description description) {
+    @Override
+    public final Statement apply(final Statement base, Description description) {
         return new Statement() {
-            @Override public void evaluate() throws Throwable {
+            @Override
+            public void evaluate() throws Throwable {
                 launchActivity();
 
                 base.evaluate();
 
-                if (!activity.isFinishing()) {
+                if(!activity.isFinishing()) {
                     activity.finish();
                 }
                 activity = null; // Eager reference kill in case someone leaked our reference.
@@ -59,7 +63,9 @@ public class ActivityRule<T extends Activity> implements TestRule {
 
     @SuppressWarnings("unchecked") // Guarded by generics at the constructor.
     public void launchActivity() {
-        if (activity != null) return;
+        if(activity != null) {
+            return;
+        }
 
         Instrumentation instrumentation = fetchInstrumentation();
 

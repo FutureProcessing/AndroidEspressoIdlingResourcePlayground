@@ -7,7 +7,7 @@ import dagger.Provides;
 public class RestServicesModule {
 
     @Provides
-    BackendContract provideLogoutService() {
+    BackendContract provideBackendService() {
         return new BackendService();
     }
 }

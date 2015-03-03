@@ -17,17 +17,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-
 @RunWith(AndroidJUnit4.class)
 public class SecondActivityEspressoTest {
     @Rule
-    public final ActivityRule<SecondActivity> second = new ActivityRule<>(SecondActivity.class);
+    public final ActivityRule<SecondActivity> secondActivity = new ActivityRule<>(SecondActivity.class);
 
     @Test
     public void secondActivityTest() throws InterruptedException {
         DecoratedLongRunningService decoratedLongRunningService = new DecoratedLongRunningService();
         registerIdlingResources(decoratedLongRunningService);
-        second.get().setService(decoratedLongRunningService);
+        secondActivity.get().setService(decoratedLongRunningService);
 
         onView(withId(R.id.button1OnSecondActivity)).perform(click());
 
@@ -40,12 +39,12 @@ public class SecondActivityEspressoTest {
         private volatile boolean isRunning;
 
         @Override
-        public void doLongRunningOpAndReturnResult(Action1<String> result) {
+        public void doLongRunningOpAndReturnResult(Action1<String> action) {
             isRunning = true;
             super.doLongRunningOpAndReturnResult(new Action1<String>() {
                 @Override
                 public void call(String realResult) {
-                    result.call(realResult);
+                    action.call(realResult);
                     isRunning = false;
                     resourceCallback.onTransitionToIdle();
                 }
