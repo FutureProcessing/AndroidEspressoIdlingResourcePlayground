@@ -267,7 +267,7 @@ public void tearDown() {
 
 By the way in the current solution there is no progress bar or any other UI indicator during login call. This is bad design and can really confuse the user. Interestingly, when I added progress bar control during login the test passes on Nexus 5 with Lollipop. It looks like Espresso correctly detects constant load on application UI events loop and synchronizes wait until SecondActivity is ready. Very cool! Unfortunately it fails on Galaxy 4 with Android 4.4. I’m not completely sure what is going on under the hood but for the purpose of demonstration of IdlingResource I removed ProgressBar.
 
-Secundo by the way: You can see that the test is not extending ActivityInstrumentationTestCase2. This is thanks to invaluable and legenedary Jake Wharton and ActivityRule
+Secundo by the way: You can see that the test is not extending ActivityInstrumentationTestCase2. This is thanks to invaluable and legendary Jake Wharton and ActivityRule
 
 Test now passes no matter if progress bar is present or not on both Nexus 5 and SGS4.
 
