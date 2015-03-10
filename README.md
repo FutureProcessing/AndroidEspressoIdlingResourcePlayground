@@ -279,11 +279,12 @@ When button is clicked:
 
 ```java
 button1OnSecondActivity.setOnClickListener(v -> {
-                                               button1OnSecondActivity.setEnabled(false);
-                                               textViewOpResult.setText("Running...");
-                                               service.doLongRunningOpAndReturnResult(result -> textViewOpResult.post(
-                                                       () -> textViewOpResult.setText(result)));
-```                                                   }
+    button1OnSecondActivity.setEnabled(false);                                           
+    textViewOpResult.setText("Running...");                                               
+    service.doLongRunningOpAndReturnResult(result -> 
+        textViewOpResult.post(                                                       
+            () -> textViewOpResult.setText(result)));
+```                                                   
 
 long running operation starts. The solution is to have service with long running operation abstracted away so Activity is not concerned with implementation details. I have deliberately used constructor for real service here because I don’t want to obscure this case with DI.
 
