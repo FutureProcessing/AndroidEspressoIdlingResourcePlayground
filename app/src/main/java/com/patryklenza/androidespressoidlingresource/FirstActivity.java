@@ -33,7 +33,7 @@ public class FirstActivity extends Activity {
                                                .subscribeOn(Schedulers.newThread())
                                                .observeOn(AndroidSchedulers.mainThread())
                                                .delay(10, TimeUnit.SECONDS)
-                                               .subscribe(launchSecondActivitySubscriber());
+                                               .subscribe(launchSecondActivity());
         });
 
         button2OnFirstActivity.setOnClickListener(v -> {
@@ -50,7 +50,7 @@ public class FirstActivity extends Activity {
         super.onDestroy();
     }
 
-    private Subscriber<Object> launchSecondActivitySubscriber() {
+    private Subscriber<Object> launchSecondActivity() {
         return new Subscriber<Object>() {
             @Override
             public void onCompleted() {

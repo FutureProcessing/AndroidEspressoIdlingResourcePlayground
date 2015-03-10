@@ -30,6 +30,7 @@ public class SecondActivityEspressoTest {
 
         onView(withId(R.id.button1OnSecondActivity)).perform(click());
 
+
         onView(withText("SUCCESS")).check(ViewAssertions.matches(isDisplayed()));
     }
 
