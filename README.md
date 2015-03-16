@@ -474,4 +474,10 @@ You can easily use Mockito to create the mock or use your own class within test 
 
 All these 3 approaches should be sufficient to efficiently and successfully use Espresso testing for your application. Happy testing!
 
+License
+=======
+
+    Copyright 2015 Future Processing Sp. z o.o.
+
+    Licensed under The MIT License (MIT), see LICENSE.txt for details.
 
